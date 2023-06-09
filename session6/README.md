@@ -1,48 +1,69 @@
 # S5.ipynb
-This is main notebook for training the MNIST dataset.
-- Train and test transforms are applied as explained in **utils.py**
-- Batch size of 512 is considered
-- matplotlib libraries in **utils.py** are used to display plots of dataset and track loss and accuracies.
-- Neural architecture as defined by **model.py** is used
-- Model has 593200 parameters
-- Model is trained for 20 epochs using gradient descent - stepLR starting at 0.01
-- Loss and accuracy graphs are generated
+# Back propogation
 
-![image](https://github.com/senthilva/ERA1/assets/8141261/c5a01939-3751-4a51-8478-20a42eb42dc2)
+The objective is train a neural network in excel and show back propogation working on weights
+
+# Proof of work
+
+
+## Network considered
 
 
 
 
-## model.py
+# Calculations
 
-This files contains neural architecture
--  2 Conv2d
-- Max Pooling
-- 2 Conv2d
-- Max Pooling
-- 2 linear layers
-- one hot encoded output for 10 output values
+* h1 = w1*i1 + w2*i2	
+* h2 = w3*i1 + w4*i2	
+* a_h1 = sigmoid(h1) = 1/(1+ exp(-h1))	
+* a_h2 = sigmoid(h2) = 1/(1+ exp(-h2))	
+* o1 = w5*a_h1 + w6*a_h2	
+* o2 = w7*a_h1 + w8*a_h2	
+* a_o1 = sigmoid(o1) = 1/(1+ exp(-o1))	
+* a_o2 = sigmoid(o2) = 1/(1+ exp(-o2))	
+* E_total = E1+ E2	
+* E1 = 1/2*(t1-a_o1)^2	
+* E1 = 1/2*(t2-a_o2)^2	
+*
+* ðE1/ða_h1 = a_01-t1*a_o1*(1-ao1)* a_h1*w5					
+* ðE2/ða_h1 = a_02-t2*a_o2*(1-ao2)* a_h1*w7					
+* ðE_total/ða_h1 = (a_01-t1)*a_o1*(1-ao1)**w5+ (a_02-t2)*a_o2*(1-ao2)* w7					
+* ðE_total/ða_h2 = (a_01-t1)*a_o1*(1-ao1)* w6 + (a_02-t2)*a_o2*(1-ao2)* w8		
+*
+* ðE_total/ðw5 = ð(E1+E2)/ðw5	
+* ðE_total/ðw5 = ð(E1)/ðw5	
+* ðE_total/ðw5 = ð(E1)/ðw5= ðE1/ða_o1*ða_o1/ðo1*ðo1/ðw5	
+* ðE1/ða_o1 = ð(1/2*(t1-a_o1)^2)/ða_o1 = -1(t1-a_o1) = a_01-t1	
+* ða_o1/ðo1 = ð(1/(1+ exp(-o1)))/ðo1 = a_o1*(1-ao1)	
+* ðo1/ðw5 = a_h1	
+*
+* ðE_total/ðw5 = (a_01-t1)*a_o1*(1-ao1)* a_h1			
+* ðE_total/ðw6 = (a_01-t1)*a_o1*(1-ao1)* a_h2			
+* ðE_total/ðw8 = (a_02-t2)*a_o2*(1-ao2)* a_h2			
+* ðE_total/ðw7 = (a_02-t2)*a_o2*(1-ao2)*a_h1	
+* 		
+* ðE_total/ðw1 =a_01-t1*a_o1*(1-ao1)* a_h1*(1-ah1)*i1				
+* ðE_total/ðw2 =a_01-t1*a_o1*(1-ao1)* a_h1*(1-ah1)*i2				
+* ðE_total/ðw4 =a_02-t2*a_o2*(1-ao2)* a_h2*(1-ah2)*i2				
+* ðE_total/ðw3 =a_02-t2*a_o2*(1-ao2)* a_h2*(1-ah2)*i1			
+*
+* ðE_total/ðw1 =ðE_total/ða_h1*ða_h1/ðh1*ðh1/w1 =  ((a_01-t1)*a_o1*(1-ao1)*w5+ (a_02-t2)*a_o2*(1-ao2)* w7)*a_h1*(1-a_h1)*i1										
+* ðE_total/ðw2 =ðE_total/ða_h1*ða_h1/ðh1*ðh1/w2 =  ((a_01-t1)*a_o1*(1-ao1)*w5+ (a_02-t2)*a_o2*(1-ao2)* w7)*a_h1*(1-a_h1)*i2										
+* ðE_total/ðw4=ðE_total/ða_h2*ða_h2/ðh2*ðh2/w4 =  ((a_01-t1)*a_o1*(1-ao1)*w6 + (a_02-t2)*a_o2*(1-ao2)* w8)*a_h2*(1-ah2)*i2										
+* ðE_total/ðw3=ðE_total/ða_h2*ða_h2/ðh2*ðh2/w3 =  ((a_01-t1)*a_o1*(1-ao1)*w6 + (a_02-t2)*a_o2*(1-ao2)* w8)*a_h2*(1-ah2)*i1										
 
-## utils.py
+# Excel Calculations
 
-### train_transforms
-- Randomly apply centercrop
-- resize to 28x28
-- random rotation of +-15 degrees
-- apply normalization
-- convert to tensor
 
-### test_transforms
-- 
-- apply normalization
-- convert to tensor
 
-### plot_train_samples
+# Error vs LR
 
-- plt 12 images from train_loader
-- display in 3x4 grid
 
-### plot_loss_accuracy
 
-- plot collected training loss, test loss
-- plot collected training accuracy, test accuracy
+# Error vs LR graph
+
+
+
+## Observations
+ 
+* As LR increases it converges faster - as it takes larger steps 
