@@ -185,7 +185,8 @@ Non-trainable params: 0
 * SGB optimizer used
 
   ```
- Adjusting learning rate of group 0 to 1.0000e-02.
+ 
+Adjusting learning rate of group 0 to 1.0000e-02.
 Epoch 1
 Train: Loss=1.5075 Batch_id=19 Accuracy=44.47: 100%|██████████| 20/20 [00:02<00:00,  7.78it/s]
 Test set: Average loss: 2.0254, Accuracy: 11158/60000 (18.60%)
@@ -288,7 +289,7 @@ Test set: Average loss: 0.1864, Accuracy: 57032/60000 (95.05%)
 Adjusting learning rate of group 0 to 1.0000e-03.
 
 
-  ```
+    ```
 
 ## Observations/ Learning
 
