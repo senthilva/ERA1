@@ -1,9 +1,10 @@
 '''
 This defines the model architecture
-    - 2 Conv2d
+    - 2 Conv2d with BN, Dropout
     - MP
-    - 1 Conv2d
+    - 1 Conv2d with BN, Dropout
     - MP
+    - 1 Conv2d with BN
     - 1  GAP
     - 1 linear layer
 '''
