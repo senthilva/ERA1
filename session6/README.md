@@ -120,52 +120,69 @@ The objective is achieve a test accuracy > 99.4% with less than 20K parameters w
 
 ## Steps taken
 
-*  Reduce parameters : reduced the channels max 32 used
-*  Reduce overfitting : Added batch normalization and dropout
-*  Data augmentation
-  *  Random rotation 5 degress
-  *  Colour Jitter
+### Iteration 1 - reduce paramaters 
+
+- Reduced parameters < 19k by changing kernels and reducing linear layers
+- Accuracy was ~12% after 5 spochs 
+- Inference was not learning 
+
+### Iteration 2 - increase the kernels and include GAP
+- Added Global average pooling
+- Size of model further reduced 
+- Accuracy improved to 40%
+- Validation accuracy was not increasing - potentially overfitting
+
+### Iteration 3 - 
+
+- Add Batch Normalization, Dropout
+- 20 epochs reached 86% val accuracy
+
+
+### Iteration 4
+
+- Reduced dropout 0.02
+-
 
 
 # Network Design
 
-* Convolution block having 2 convolution layers followed by batch normalization
-* One dropout for each convolution block
-* MaxPool after convolution block
-* Global average pooling before last linear layer
+
 
   ```
-    ----------------------------------------------------------------
-          Layer (type)               Output Shape         Param #
-  ================================================================
-              Conv2d-1            [-1, 8, 28, 28]              80
-         BatchNorm2d-2            [-1, 8, 28, 28]              16
-              Conv2d-3           [-1, 16, 28, 28]           1,168
-         BatchNorm2d-4           [-1, 16, 28, 28]              32
-             Dropout-5           [-1, 16, 28, 28]               0
-           MaxPool2d-6           [-1, 16, 14, 14]               0
-              Conv2d-7           [-1, 32, 14, 14]           4,640
-         BatchNorm2d-8           [-1, 32, 14, 14]              64
-              Conv2d-9           [-1, 24, 14, 14]           6,936
-        BatchNorm2d-10           [-1, 24, 14, 14]              48
-            Dropout-11           [-1, 24, 14, 14]               0
-          MaxPool2d-12             [-1, 24, 7, 7]               0
-             Conv2d-13             [-1, 16, 5, 5]           3,472
-          AvgPool2d-14             [-1, 16, 1, 1]               0
-             Linear-15                   [-1, 10]             170
-  ================================================================
-  Total params: 16,626
-  Trainable params: 16,626
-  Non-trainable params: 0
-  ----------------------------------------------------------------
+   ----------------------------------------------------------------
+        Layer (type)               Output Shape         Param #
+================================================================
+            Conv2d-1            [-1, 8, 26, 26]              80
+       BatchNorm2d-2            [-1, 8, 26, 26]              16
+           Dropout-3            [-1, 8, 26, 26]               0
+              ReLU-4            [-1, 8, 26, 26]               0
+            Conv2d-5           [-1, 16, 24, 24]           1,168
+       BatchNorm2d-6           [-1, 16, 24, 24]              32
+           Dropout-7           [-1, 16, 24, 24]               0
+              ReLU-8           [-1, 16, 24, 24]               0
+         MaxPool2d-9           [-1, 16, 12, 12]               0
+           Conv2d-10           [-1, 32, 10, 10]           4,640
+      BatchNorm2d-11           [-1, 32, 10, 10]              64
+          Dropout-12           [-1, 32, 10, 10]               0
+             ReLU-13           [-1, 32, 10, 10]               0
+        MaxPool2d-14             [-1, 32, 5, 5]               0
+           Conv2d-15             [-1, 40, 3, 3]          11,560
+      BatchNorm2d-16             [-1, 40, 3, 3]              80
+AdaptiveAvgPool2d-17             [-1, 40, 1, 1]               0
+           Linear-18                   [-1, 10]             410
+================================================================
+Total params: 18,050
+Trainable params: 18,050
+Non-trainable params: 0
+----------------------------------------------------------------
   ```
  
 ## Training and Loss
 
-* Number of epochs : 19
+* Number of epochs : 20
 * Loss - Negative log likehood
-* batch_size = 128
-* Adam optimizer used
+* batch_size = 512
+* SGB optimizer used
 
   ```
       0%|          | 0/469 [00:00<?, ?it/s]EPOCH : 1
@@ -269,7 +286,7 @@ The objective is achieve a test accuracy > 99.4% with less than 20K parameters w
 
 ## Observations/ Learning
 
-* Total params: 16,626
+* Total params: 18,050
 * Test accuracy achieved : 99.13
 * No batch normalization or dropout was used to close to the prediction layer
 
