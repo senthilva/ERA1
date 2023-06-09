@@ -1,5 +1,4 @@
-# S5.ipynb
-# Back propogation
+# Part 1 - Back propogation
 
 The objective is train a neural network in excel and show back propogation working on weights
 
