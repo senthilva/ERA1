@@ -10,11 +10,9 @@ import matplotlib.pyplot as plt
 
 # Train data transformations
 train_transforms = transforms.Compose([
-    transforms.RandomApply([transforms.CenterCrop(22), ], p=0.1),
+   transforms.RandomApply([transforms.CenterCrop(22), ], p=0.1),
     transforms.Resize((28, 28)),
-    #transforms.RandomRotation((-5., 5.), fill=0),
-    transforms.RandomRotation(5),                         
-    transforms.ColorJitter(brightness=0.2, contrast=0.2),
+    transforms.RandomRotation((-5., 5.), fill=0),
     transforms.ToTensor(),
     transforms.Normalize((0.1307,), (0.3081,)),
     ])
@@ -24,7 +22,6 @@ test_transforms = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize((0.1307,), (0.3081,))
     ])
-
 
 
 def plot_train_samples(train_loader):
