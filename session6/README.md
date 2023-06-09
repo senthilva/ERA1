@@ -141,7 +141,7 @@ The objective is achieve a test accuracy > 99.4% with less than 20K parameters w
 ### Iteration 4
 
 - Reduced dropout 0.02
--
+
 
 
 # Network Design
@@ -185,101 +185,107 @@ Non-trainable params: 0
 * SGB optimizer used
 
   ```
-      0%|          | 0/469 [00:00<?, ?it/s]EPOCH : 1
-   /usr/local/lib/python3.7/dist-packages/ipykernel_launcher.py:34: UserWarning: Implicit dimension choice for log_softmax has been deprecated. Change the call to include dim=X as an argument.
-   loss=0.1951860934495926 batch_id=468: 100%|██████████| 469/469 [00:29<00:00, 15.88it/s]
-     0%|          | 0/469 [00:00<?, ?it/s]
-   Test set: Average loss: 0.1778, Accuracy: 9515/10000 (95.15%)
+ Adjusting learning rate of group 0 to 1.0000e-02.
+Epoch 1
+Train: Loss=1.5075 Batch_id=19 Accuracy=44.47: 100%|██████████| 20/20 [00:02<00:00,  7.78it/s]
+Test set: Average loss: 2.0254, Accuracy: 11158/60000 (18.60%)
 
-   EPOCH : 2
-   loss=0.12187216430902481 batch_id=468: 100%|██████████| 469/469 [00:28<00:00, 16.23it/s]
-     0%|          | 0/469 [00:00<?, ?it/s]
-   Test set: Average loss: 0.1427, Accuracy: 9550/10000 (95.50%)
+Adjusting learning rate of group 0 to 1.0000e-02.
+Epoch 2
+Train: Loss=0.8810 Batch_id=19 Accuracy=76.81: 100%|██████████| 20/20 [00:02<00:00,  8.53it/s]
+Test set: Average loss: 1.1745, Accuracy: 39934/60000 (66.56%)
 
-   EPOCH : 3
-   loss=0.041622504591941833 batch_id=468: 100%|██████████| 469/469 [00:30<00:00, 15.44it/s]
-     0%|          | 0/469 [00:00<?, ?it/s]
-   Test set: Average loss: 0.0894, Accuracy: 9713/10000 (97.13%)
+Adjusting learning rate of group 0 to 1.0000e-02.
+Epoch 3
+Train: Loss=0.5525 Batch_id=19 Accuracy=89.09: 100%|██████████| 20/20 [00:02<00:00,  8.27it/s]
+Test set: Average loss: 0.8286, Accuracy: 46259/60000 (77.10%)
 
-   EPOCH : 4
-   loss=0.037716399878263474 batch_id=468: 100%|██████████| 469/469 [00:30<00:00, 15.45it/s]
-     0%|          | 0/469 [00:00<?, ?it/s]
-   Test set: Average loss: 0.0674, Accuracy: 9797/10000 (97.97%)
+Adjusting learning rate of group 0 to 1.0000e-02.
+Epoch 4
+Train: Loss=0.3714 Batch_id=19 Accuracy=93.07: 100%|██████████| 20/20 [00:02<00:00,  8.67it/s]
+Test set: Average loss: 0.6918, Accuracy: 48118/60000 (80.20%)
 
-   EPOCH : 5
-   loss=0.07980864495038986 batch_id=468: 100%|██████████| 469/469 [00:29<00:00, 15.76it/s]
-     0%|          | 0/469 [00:00<?, ?it/s]
-   Test set: Average loss: 0.0462, Accuracy: 9863/10000 (98.63%)
+Adjusting learning rate of group 0 to 1.0000e-02.
+Epoch 5
+Train: Loss=0.2359 Batch_id=19 Accuracy=94.73: 100%|██████████| 20/20 [00:02<00:00,  8.41it/s]
+Test set: Average loss: 0.5213, Accuracy: 51605/60000 (86.01%)
 
-   EPOCH : 6
-   loss=0.025407209992408752 batch_id=468: 100%|██████████| 469/469 [00:28<00:00, 16.26it/s]
-     0%|          | 0/469 [00:00<?, ?it/s]
-   Test set: Average loss: 0.0442, Accuracy: 9874/10000 (98.74%)
+Adjusting learning rate of group 0 to 1.0000e-02.
+Epoch 6
+Train: Loss=0.2528 Batch_id=19 Accuracy=95.74: 100%|██████████| 20/20 [00:02<00:00,  8.68it/s]
+Test set: Average loss: 0.4041, Accuracy: 53651/60000 (89.42%)
 
-   EPOCH : 7
-   loss=0.004418657626956701 batch_id=468: 100%|██████████| 469/469 [00:29<00:00, 16.17it/s]
-     0%|          | 0/469 [00:00<?, ?it/s]
-   Test set: Average loss: 0.0462, Accuracy: 9849/10000 (98.49%)
+Adjusting learning rate of group 0 to 1.0000e-02.
+Epoch 7
+Train: Loss=0.2055 Batch_id=19 Accuracy=96.43: 100%|██████████| 20/20 [00:02<00:00,  8.36it/s]
+Test set: Average loss: 0.3407, Accuracy: 54889/60000 (91.48%)
 
-   EPOCH : 8
-   loss=0.078040212392807 batch_id=468: 100%|██████████| 469/469 [00:29<00:00, 16.14it/s]
-     0%|          | 0/469 [00:00<?, ?it/s]
-   Test set: Average loss: 0.0454, Accuracy: 9862/10000 (98.62%)
+Adjusting learning rate of group 0 to 1.0000e-02.
+Epoch 8
+Train: Loss=0.1768 Batch_id=19 Accuracy=96.84: 100%|██████████| 20/20 [00:02<00:00,  8.61it/s]
+Test set: Average loss: 0.3337, Accuracy: 54552/60000 (90.92%)
 
-   EPOCH : 9
-   loss=0.030806919559836388 batch_id=468: 100%|██████████| 469/469 [00:29<00:00, 16.12it/s]
-     0%|          | 0/469 [00:00<?, ?it/s]
-   Test set: Average loss: 0.0302, Accuracy: 9907/10000 (99.07%)
+Adjusting learning rate of group 0 to 1.0000e-02.
+Epoch 9
+Train: Loss=0.1517 Batch_id=19 Accuracy=97.23: 100%|██████████| 20/20 [00:02<00:00,  8.51it/s]
+Test set: Average loss: 0.3302, Accuracy: 54440/60000 (90.73%)
 
-   EPOCH : 10
-   loss=0.0046560498885810375 batch_id=468: 100%|██████████| 469/469 [00:29<00:00, 16.04it/s]
-     0%|          | 0/469 [00:00<?, ?it/s]
-   Test set: Average loss: 0.0306, Accuracy: 9912/10000 (99.12%)
+Adjusting learning rate of group 0 to 1.0000e-02.
+Epoch 10
+Train: Loss=0.1205 Batch_id=19 Accuracy=97.53: 100%|██████████| 20/20 [00:02<00:00,  8.54it/s]
+Test set: Average loss: 0.2469, Accuracy: 56261/60000 (93.77%)
 
-   EPOCH : 11
-   loss=0.0323166698217392 batch_id=468: 100%|██████████| 469/469 [00:29<00:00, 16.04it/s]
-     0%|          | 0/469 [00:00<?, ?it/s]
-   Test set: Average loss: 0.0336, Accuracy: 9897/10000 (98.97%)
+Adjusting learning rate of group 0 to 1.0000e-02.
+Epoch 11
+Train: Loss=0.1293 Batch_id=19 Accuracy=97.86: 100%|██████████| 20/20 [00:02<00:00,  8.60it/s]
+Test set: Average loss: 0.2576, Accuracy: 55866/60000 (93.11%)
 
-   EPOCH : 12
-   loss=0.012631400488317013 batch_id=468: 100%|██████████| 469/469 [00:29<00:00, 15.94it/s]
-     0%|          | 0/469 [00:00<?, ?it/s]
-   Test set: Average loss: 0.0457, Accuracy: 9867/10000 (98.67%)
+Adjusting learning rate of group 0 to 1.0000e-02.
+Epoch 12
+Train: Loss=0.1277 Batch_id=19 Accuracy=97.94: 100%|██████████| 20/20 [00:02<00:00,  8.59it/s]
+Test set: Average loss: 0.2564, Accuracy: 55795/60000 (92.99%)
 
-   EPOCH : 13
-   loss=0.05438346043229103 batch_id=468: 100%|██████████| 469/469 [00:29<00:00, 15.94it/s]
-     0%|          | 0/469 [00:00<?, ?it/s]
-   Test set: Average loss: 0.0430, Accuracy: 9865/10000 (98.65%)
+Adjusting learning rate of group 0 to 1.0000e-02.
+Epoch 13
+Train: Loss=0.1270 Batch_id=19 Accuracy=98.24: 100%|██████████| 20/20 [00:02<00:00,  8.24it/s]
+Test set: Average loss: 0.2297, Accuracy: 56222/60000 (93.70%)
 
-   EPOCH : 14
-   loss=0.012918871827423573 batch_id=468: 100%|██████████| 469/469 [00:29<00:00, 15.84it/s]
-     0%|          | 0/469 [00:00<?, ?it/s]
-   Test set: Average loss: 0.0317, Accuracy: 9904/10000 (99.04%)
+Adjusting learning rate of group 0 to 1.0000e-02.
+Epoch 14
+Train: Loss=0.0806 Batch_id=19 Accuracy=98.36: 100%|██████████| 20/20 [00:02<00:00,  8.46it/s]
+Test set: Average loss: 0.2405, Accuracy: 55904/60000 (93.17%)
 
-   EPOCH : 15
-   loss=0.007770549971610308 batch_id=468: 100%|██████████| 469/469 [00:29<00:00, 16.14it/s]
-     0%|          | 0/469 [00:00<?, ?it/s]
-   Test set: Average loss: 0.0297, Accuracy: 9914/10000 (99.14%)
+Adjusting learning rate of group 0 to 1.0000e-02.
+Epoch 15
+Train: Loss=0.0822 Batch_id=19 Accuracy=98.49: 100%|██████████| 20/20 [00:03<00:00,  6.57it/s]
+Test set: Average loss: 0.2143, Accuracy: 56332/60000 (93.89%)
 
-   EPOCH : 16
-   loss=0.011336133815348148 batch_id=468: 100%|██████████| 469/469 [00:29<00:00, 16.03it/s]
-     0%|          | 0/469 [00:00<?, ?it/s]
-   Test set: Average loss: 0.0283, Accuracy: 9912/10000 (99.12%)
+Adjusting learning rate of group 0 to 1.0000e-03.
+Epoch 16
+Train: Loss=0.0539 Batch_id=19 Accuracy=98.75: 100%|██████████| 20/20 [00:02<00:00,  8.28it/s]
+Test set: Average loss: 0.1947, Accuracy: 56790/60000 (94.65%)
 
-   EPOCH : 17
-   loss=0.03598247841000557 batch_id=468: 100%|██████████| 469/469 [00:29<00:00, 16.00it/s]
-     0%|          | 0/469 [00:00<?, ?it/s]
-   Test set: Average loss: 0.0310, Accuracy: 9900/10000 (99.00%)
+Adjusting learning rate of group 0 to 1.0000e-03.
+Epoch 17
+Train: Loss=0.0736 Batch_id=19 Accuracy=98.68: 100%|██████████| 20/20 [00:03<00:00,  5.41it/s]
+Test set: Average loss: 0.1870, Accuracy: 57069/60000 (95.11%)
 
-   EPOCH : 18
-   loss=0.01342777069658041 batch_id=468: 100%|██████████| 469/469 [00:29<00:00, 16.04it/s]
-     0%|          | 0/469 [00:00<?, ?it/s]
-   Test set: Average loss: 0.0340, Accuracy: 9895/10000 (98.95%)
+Adjusting learning rate of group 0 to 1.0000e-03.
+Epoch 18
+Train: Loss=0.1044 Batch_id=19 Accuracy=98.70: 100%|██████████| 20/20 [00:02<00:00,  8.22it/s]
+Test set: Average loss: 0.1861, Accuracy: 57019/60000 (95.03%)
 
-   EPOCH : 19
-   loss=0.031836893409490585 batch_id=468: 100%|██████████| 469/469 [00:29<00:00, 16.12it/s]
+Adjusting learning rate of group 0 to 1.0000e-03.
+Epoch 19
+Train: Loss=0.0811 Batch_id=19 Accuracy=98.72: 100%|██████████| 20/20 [00:02<00:00,  7.48it/s]
+Test set: Average loss: 0.1883, Accuracy: 56966/60000 (94.94%)
 
-   Test set: Average loss: 0.0292, Accuracy: 9913/10000 (99.13%)
+Adjusting learning rate of group 0 to 1.0000e-03.
+Epoch 20
+Train: Loss=0.0668 Batch_id=19 Accuracy=98.76: 100%|██████████| 20/20 [00:02<00:00,  8.26it/s]
+Test set: Average loss: 0.1864, Accuracy: 57032/60000 (95.05%)
+
+Adjusting learning rate of group 0 to 1.0000e-03.
 
 
   ```
@@ -287,6 +293,6 @@ Non-trainable params: 0
 ## Observations/ Learning
 
 * Total params: 18,050
-* Test accuracy achieved : 99.13
+* Test accuracy achieved : 95.05
 * No batch normalization or dropout was used to close to the prediction layer
 
