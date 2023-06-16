@@ -38,9 +38,7 @@
 - More epochs i think we would have hit the goal of 99.4%
 
 
-## Iteration 3 - 
-
-There was a Batch Normalization(BN) and RELU near the final layer.Fixed that.
+## Iteration 3 - There was a Batch Normalization(BN) and RELU near the final layer.Fixed that.
 Enabled dropout to tackle overfitting
 
 ### Target
@@ -59,11 +57,12 @@ Enabled dropout to tackle overfitting
 - End image size is too small 
 - Maybe considering adding padding
 
-## Iteration 4 - Improve training accuracy and remain within 8K parameters
+## Iteration 4 - Reduce dropout + add image augmentation
 
 
 ### Target
 - Reduced dropout
+- Added image augmentation
 - Expected val accuracy to increase
 
 ### Results
