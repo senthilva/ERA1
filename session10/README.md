@@ -183,7 +183,8 @@ test_transform = A.Compose(
                                             three_phase = False,
                                             epochs=EPOCHS)
     ```
-
+LR suggestion: steepest gradient
+Suggested LR: 1.91E-03
 ![image](https://github.com/senthilva/ERA1/assets/8141261/34ae5e78-a244-4b7d-9889-67b068abd993)
 
 
