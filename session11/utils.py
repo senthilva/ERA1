@@ -11,6 +11,10 @@ import math
 import torch.nn as nn
 import torch.nn.init as init
 
+import matplotlib.pyplot as plt
+import albumentations as A
+from albumentations.pytorch import ToTensorV2
+
 def transform_trainv2():
     return A.Compose(
     [
@@ -144,3 +148,42 @@ def format_time(seconds):
     if f == '':
         f = '0ms'
     return f
+
+def denormalize(images, means, stds):
+    means = torch.tensor(means).reshape(1, 3, 1, 1)
+    stds = torch.tensor(stds).reshape(1, 3, 1, 1)
+    return images * stds + means
+    
+def display_misclassified_images(model,device,classes):
+    print("\n********* Misclassified Images **************\n")
+    model.eval()
+
+    # Create a test loader with batch size equal to test data length
+    test = torchvision.datasets.CIFAR10(
+                                        root='./data', train=False, 
+                                        download=True, transform=transform_test())
+    
+    # dataloader arguments - something you'll fetch these from cmdprmt
+    dataloader_args = dict(shuffle=True, batch_size=len(test), 
+                           num_workers=2, pin_memory=True)
+    
+    # test dataloader
+    testloader = torch.utils.data.DataLoader(test, **dataloader_args)
+    
+    
+    with torch.no_grad():
+        for data, target in testloader:
+            data, target = data.to(device), target.to(device)
+            output = model(data)
+            pred = output.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
+            # Get the indexes of images that are incorrectly classified
+            indexes = (pred.view(-1,) != target.view(-1,)).nonzero()
+            plt.ion()
+            fig = plt.figure(figsize=(15, 20))
+            for i, idx in enumerate(indexes[:10]):
+                ax = fig.add_subplot(2, 5, i+1)
+                denorm_images = denormalize(data.cpu(), [0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])
+                ax.imshow(denorm_images[idx].squeeze().permute(1, 2, 0).clamp(0,1))
+                ax.set_title(f"Target = {classes[target[idx].item()]} \n Predicted = {classes[pred[idx].item()]}")
+
+            plt.show()
