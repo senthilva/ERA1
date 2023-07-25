@@ -35,6 +35,9 @@ torch.manual_seed(SEED)
 if cuda:
     torch.cuda.manual_seed(SEED)
 
+device = torch.device("cuda" if cuda else "cpu")
+print(device)
+
 # Data
 print('==> Preparing data..')
 
