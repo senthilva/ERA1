@@ -150,7 +150,7 @@ def test(model, device, test_loader):
 from torch.optim.lr_scheduler import OneCycleLR
 
 #model =  Net().to(device)
-EPOCHS = args.no_of_epochs)
+EPOCHS = args.no_of_epochs
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=1e-3,weight_decay=1e-2)
 scheduler = OneCycleLR(optimizer, max_lr=1.91E-03,
