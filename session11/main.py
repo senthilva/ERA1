@@ -45,12 +45,12 @@ class Cifar10SearchDataset(torchvision.datasets.CIFAR10):
 
 trainset = Cifar10SearchDataset(root='./data', train=True,
                                         download=True, transform=transform_trainv2())
-trainloader = torch.utils.data.DataLoader(trainset, batch_size=args.batch_size,
+train_loader = torch.utils.data.DataLoader(trainset, batch_size=args.batch_size,
                                           shuffle=True, num_workers=2)
 
 testset = Cifar10SearchDataset(root='./data', train=False,
                                        download=True,transform = transform_testv2())
-testloader =torch.utils.data.DataLoader(testset, batch_size=args.batch_size,
+test_loader =torch.utils.data.DataLoader(testset, batch_size=args.batch_size,
                                          shuffle=False, num_workers=2)
 
 classes = ('plane', 'car', 'bird', 'cat', 'deer',
