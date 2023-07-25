@@ -241,7 +241,7 @@ scheduler = OneCycleLR(optimizer, max_lr=1.91E-03,
                       epochs=EPOCHS)
 
 
-for epoch in range(EPOCHS):
+for epoch in args.no_of_epochs:
     print("EPOCH:", epoch)
     train(model, device, train_loader, optimizer, epoch)
     # scheduler.step()
