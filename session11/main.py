@@ -23,9 +23,17 @@ parser.add_argument('--no_of_epochs',default=20,type=int, help='no of epochs')
 parser.add_argument('--batch_size',default=128,type=int, help='batch size')
 args = parser.parse_args()
 
-device = 'cuda' if torch.cuda.is_available() else 'cpu'
-best_acc = 0  # best test accuracy
-start_epoch = 1  # start from epoch 0 or last checkpoint epoch
+SEED = 1
+
+# CUDA?
+cuda = torch.cuda.is_available()
+print("CUDA Available?", cuda)
+
+# For reproducibility
+torch.manual_seed(SEED)
+
+if cuda:
+    torch.cuda.manual_seed(SEED)
 
 # Data
 print('==> Preparing data..')
@@ -73,95 +81,8 @@ print('==> Building model..')
 # net = EfficientNetB0()
 # net = RegNetX_200MF()
 net = ResNet18()
-net = net.to(device)
-if device == 'cuda':
-    net = torch.nn.DataParallel(net)
-    cudnn.benchmark = True
-'''
-if args.resume:
-    # Load checkpoint.
-    print('==> Resuming from checkpoint..')
-    assert os.path.isdir('checkpoint'), 'Error: no checkpoint directory found!'
-    checkpoint = torch.load('./checkpoint/ckpt.pth')
-    net.load_state_dict(checkpoint['net'])
-    best_acc = checkpoint['acc']
-    start_epoch = checkpoint['epoch']
+model =net.to(device)
 
-criterion = nn.CrossEntropyLoss()
-optimizer = optim.SGD(net.parameters(), lr=args.lr,
-                      momentum=0.9, weight_decay=5e-4)
-#scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=200)
-scheduler = torch.optim.lr_scheduler.OneCycleLR(optimizer, max_lr=0.4,
-                                                pct_start = 0.18,
-                                                steps_per_epoch=len(trainloader),
-                                                epochs=25)
-
-
-# Training
-def train(epoch):
-    print('\nEpoch: %d' % epoch)
-    net.train()
-    train_loss = 0
-    correct = 0
-    total = 0
-    for batch_idx, (inputs, targets) in enumerate(trainloader):
-        inputs, targets = inputs.to(device), targets.to(device)
-        optimizer.zero_grad()
-        outputs = net(inputs)
-        loss = criterion(outputs, targets)
-        loss.backward()
-        optimizer.step()
-
-        train_loss += loss.item()
-        _, predicted = outputs.max(1)
-        total += targets.size(0)
-        correct += predicted.eq(targets).sum().item()
-
-        progress_bar(batch_idx, len(trainloader), 'Loss: %.3f | Acc: %.3f%% (%d/%d)'
-                     % (train_loss/(batch_idx+1), 100.*correct/total, correct, total))
-
-
-def test(epoch):
-    global best_acc
-    net.eval()
-    test_loss = 0
-    correct = 0
-    total = 0
-    with torch.no_grad():
-        for batch_idx, (inputs, targets) in enumerate(testloader):
-            inputs, targets = inputs.to(device), targets.to(device)
-            outputs = net(inputs)
-            loss = criterion(outputs, targets)
-
-            test_loss += loss.item()
-            _, predicted = outputs.max(1)
-            total += targets.size(0)
-            correct += predicted.eq(targets).sum().item()
-
-            progress_bar(batch_idx, len(testloader), 'Loss: %.3f | Acc: %.3f%% (%d/%d)'
-                         % (test_loss/(batch_idx+1), 100.*correct/total, correct, total))
-
-    # Save checkpoint.
-    acc = 100.*correct/total
-    if acc > best_acc:
-        print('Saving..')
-        state = {
-            'net': net.state_dict(),
-            'acc': acc,
-            'epoch': epoch,
-        }
-        if not os.path.isdir('checkpoint'):
-            os.mkdir('checkpoint')
-        torch.save(state, './checkpoint/ckpt.pth')
-        best_acc = acc
-
-
-for epoch in range(start_epoch, start_epoch+args.no_of_epochs):
-    train(epoch)
-    test(epoch)
-    scheduler.step()
-    print(f' Learning Rate : {scheduler.get_last_lr()}')
-'''
 
 from tqdm import tqdm
 
@@ -229,9 +150,9 @@ def test(model, device, test_loader):
 from torch.optim.lr_scheduler import OneCycleLR
 
 #model =  Net().to(device)
-EPOCHS = 24
+EPOCHS = args.no_of_epochs)
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(net.parameters(), lr=1e-3,weight_decay=1e-2)
+optimizer = optim.Adam(model.parameters(), lr=1e-3,weight_decay=1e-2)
 scheduler = OneCycleLR(optimizer, max_lr=1.91E-03,
                       pct_start = 5/EPOCHS,
                       steps_per_epoch=len(train_loader),
@@ -241,7 +162,7 @@ scheduler = OneCycleLR(optimizer, max_lr=1.91E-03,
                       epochs=EPOCHS)
 
 
-for epoch in range(args.no_of_epochs):
+for epoch in range(EPOCHS):
     print("EPOCH:", epoch)
     train(net, device, train_loader, optimizer, epoch)
     # scheduler.step()
