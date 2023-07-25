@@ -231,7 +231,7 @@ from torch.optim.lr_scheduler import OneCycleLR
 #model =  Net().to(device)
 EPOCHS = 24
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=1e-3,weight_decay=1e-2)
+optimizer = optim.Adam(net.parameters(), lr=1e-3,weight_decay=1e-2)
 scheduler = OneCycleLR(optimizer, max_lr=1.91E-03,
                       pct_start = 5/EPOCHS,
                       steps_per_epoch=len(train_loader),
@@ -243,6 +243,6 @@ scheduler = OneCycleLR(optimizer, max_lr=1.91E-03,
 
 for epoch in args.no_of_epochs:
     print("EPOCH:", epoch)
-    train(model, device, train_loader, optimizer, epoch)
+    train(net, device, train_loader, optimizer, epoch)
     # scheduler.step()
-    test(model, device, test_loader)
+    test(net, device, test_loader)
