@@ -157,7 +157,7 @@ EPOCHS = args.no_of_epochs
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=1e-3,weight_decay=1e-2)
 scheduler = OneCycleLR(optimizer, max_lr=1.91E-03,
-                      pct_start = 5/EPOCHS,
+                      pct_start = 0.2,
                       steps_per_epoch=len(train_loader),
                       div_factor = 100,
                       final_div_factor = 100,
