@@ -17,8 +17,8 @@ from utils import *
 
 parser = argparse.ArgumentParser(description='PyTorch CIFAR10 Training')
 parser.add_argument('--lr', default=0.001, type=float, help='learning rate')
-parser.add_argument('--resume', '-r', action='store_true',
-                    help='resume from checkpoint')
+#parser.add_argument('--resume', '-r', action='store_true',
+#                    help='resume from checkpoint')
 parser.add_argument('--no_of_epochs',default=20,type=int, help='no of epochs')
 parser.add_argument('--batch_size',default=128,type=int, help='batch size')
 args = parser.parse_args()
@@ -77,7 +77,7 @@ net = net.to(device)
 if device == 'cuda':
     net = torch.nn.DataParallel(net)
     cudnn.benchmark = True
-
+'''
 if args.resume:
     # Load checkpoint.
     print('==> Resuming from checkpoint..')
@@ -161,3 +161,88 @@ for epoch in range(start_epoch, start_epoch+args.no_of_epochs):
     test(epoch)
     scheduler.step()
     print(f' Learning Rate : {scheduler.get_last_lr()}')
+'''
+
+from tqdm import tqdm
+
+train_losses = []
+test_losses = []
+train_acc = []
+test_acc = []
+
+def train(model, device, train_loader, optimizer, epoch):
+  model.train()
+  pbar = tqdm(train_loader)
+  correct = 0
+  processed = 0
+  for batch_idx, (data, target) in enumerate(pbar):
+    # get samples
+    data, target = data.to(device), target.to(device)
+
+    # Init
+    optimizer.zero_grad()
+    # In PyTorch, we need to set the gradients to zero before starting to do backpropragation because PyTorch accumulates the gradients on subsequent backward passes.
+    # Because of this, when you start your training loop, ideally you should zero out the gradients so that you do the parameter update correctly.
+
+    # Predict
+    y_pred = model(data)
+
+    # Calculate loss
+    loss = F.nll_loss(y_pred, target)
+    train_losses.append(loss)
+
+    # Backpropagation
+    loss.backward()
+    optimizer.step()
+
+    # Update pbar-tqdm
+
+    pred = y_pred.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
+    correct += pred.eq(target.view_as(pred)).sum().item()
+    processed += len(data)
+
+    pbar.set_description(desc= f'Loss={loss.item()} Batch_id={batch_idx} Accuracy={100*correct/processed:0.2f}')
+    train_acc.append(100*correct/processed)
+
+def test(model, device, test_loader):
+    model.eval()
+    test_loss = 0
+    correct = 0
+    with torch.no_grad():
+        for data, target in test_loader:
+            data, target = data.to(device), target.to(device)
+            output = model(data)
+            test_loss += F.nll_loss(output, target, reduction='sum').item()  # sum up batch loss
+            pred = output.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
+            correct += pred.eq(target.view_as(pred)).sum().item()
+
+    test_loss /= len(test_loader.dataset)
+    test_losses.append(test_loss)
+
+    print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.2f}%)\n'.format(
+        test_loss, correct, len(test_loader.dataset),
+        100. * correct / len(test_loader.dataset)))
+
+    test_acc.append(100. * correct / len(test_loader.dataset))
+
+
+from torch.optim.lr_scheduler import OneCycleLR
+
+#model =  Net().to(device)
+EPOCHS = 24
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters(), lr=1e-3,weight_decay=1e-2)
+scheduler = OneCycleLR(optimizer, max_lr=1.91E-03,
+                      pct_start = 5/EPOCHS,
+                      steps_per_epoch=len(train_loader),
+                      div_factor = 100,
+                      final_div_factor = 100,
+                      three_phase = False,
+                      epochs=EPOCHS)
+
+
+for epoch in range(EPOCHS):
+    print("EPOCH:", epoch)
+    train(model, device, train_loader, optimizer, epoch)
+    # scheduler.step()
+    test(model, device, test_loader)
