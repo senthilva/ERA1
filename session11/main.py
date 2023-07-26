@@ -170,3 +170,5 @@ for epoch in range(EPOCHS):
     train(net, device, train_loader, optimizer, epoch)
     # scheduler.step()
     test(net, device, test_loader)
+
+display_misclassified_images(net,device,list(classes))
