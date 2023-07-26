@@ -178,7 +178,7 @@ def display_misclassified_images(model,device,classes):
   
     testset = Cifar10SearchDataset(root='./data', train=False,
                                            download=True,transform = transform_testv2())
-    test_loader =torch.utils.data.test_loader(testset, batch_size=len(testset),
+    testloader =torch.utils.data.DataLoader(testset, batch_size=len(testset),
                                              shuffle=True, num_workers=2)
     with torch.no_grad():
         for data, target in testloader:
