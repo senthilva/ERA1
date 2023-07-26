@@ -172,3 +172,15 @@ for epoch in range(EPOCHS):
     test(net, device, test_loader)
 
 display_misclassified_images(net,device,list(classes))
+'''
+from pytorch_grad_cam import GradCAM
+from pytorch_grad_cam.utils.model_targets import ClassifierOutputTarget
+from pytorch_grad_cam.utils.image import show_cam_on_image
+
+target_layers = [model.layer4[-1]]
+input_tensor
+
+# Construct the CAM object once, and then re-use it on many images:
+cam = GradCAM(model=model, target_layers=target_layers, use_cuda=args.use_cuda)
+
+'''
