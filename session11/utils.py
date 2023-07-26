@@ -191,7 +191,7 @@ def display_misclassified_images(model,device,classes):
             fig = plt.figure(figsize=(15, 20))
             for i, idx in enumerate(indexes[:10]):
                 ax = fig.add_subplot(2, 5, i+1)
-                denorm_images = denormalize(data.cpu(), [0.4914, 0.4822, 0.4465], [0.2470, 0.2435, 0.2616])
+                denorm_images = denormalize(data, [0.4914, 0.4822, 0.4465], [0.2470, 0.2435, 0.2616])
                 ax.imshow(denorm_images[idx].squeeze().permute(1, 2, 0).clamp(0,1))
                 ax.set_title(f"Target = {classes[target[idx].item()]} \n Predicted = {classes[pred[idx].item()]}")
 
