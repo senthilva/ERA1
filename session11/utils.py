@@ -11,6 +11,8 @@ import math
 import torch.nn as nn
 import torch.nn.init as init
 
+import torchvision
+
 import matplotlib.pyplot as plt
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
