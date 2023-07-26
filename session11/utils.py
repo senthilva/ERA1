@@ -162,19 +162,24 @@ def display_misclassified_images(model,device,classes):
     print("\n********* Misclassified Images **************\n")
     model.eval()
 
-    # Create a test loader with batch size equal to test data length
-    test = torchvision.datasets.CIFAR10(
-                                        root='./data', train=False, 
-                                        download=True, transform=transform_testv2())
-    
-    # dataloader arguments - something you'll fetch these from cmdprmt
-    dataloader_args = dict(shuffle=True, batch_size=len(test), 
-                           num_workers=2, pin_memory=True)
-    
-    # test dataloader
-    testloader = torch.utils.data.DataLoader(test, **dataloader_args)
-    
-    
+    class Cifar10SearchDataset(torchvision.datasets.CIFAR10):
+    def __init__(self, root="~/data/cifar10", train=True, download=True, transform=None):
+        super().__init__(root=root, train=train, download=download, transform=transform)
+
+    def __getitem__(self, index):
+        image, label = self.data[index], self.targets[index]
+
+        if self.transform is not None:
+            transformed = self.transform(image=image)
+            image = transformed["image"]
+
+        return image, label
+
+  
+    testset = Cifar10SearchDataset(root='./data', train=False,
+                                           download=True,transform = transform_testv2())
+    test_loader =torch.utils.data.test_loader(testset, batch_size=len(testset),
+                                             shuffle=True, num_workers=2)
     with torch.no_grad():
         for data, target in testloader:
             data, target = data.to(device), target.to(device)
