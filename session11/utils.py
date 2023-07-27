@@ -195,7 +195,7 @@ def display_misclassified_images(model,device,classes):
                 #ax.imshow(denorm_images[idx].squeeze().permute(1, 2, 0).clamp(0,1))
                 
                 #def imshow(tensor):
-                tensor = denorm_images[idx]
+                tensor = denorm_images[idx].cuda()
                 if tensor.device != plt.gca().device:
                     tensor = tensor.cpu()
                     plt.imshow(tensor.squeeze().permute(1, 2, 0).clamp(0, 1))
