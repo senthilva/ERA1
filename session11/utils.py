@@ -157,7 +157,7 @@ def denormalize(images, means, stds):
     stds = torch.tensor(stds).reshape(1, 3, 1, 1)
     return images * stds + means
     
-
+'''
 def display_misclassified_images(model,device,classes):
     print("\n********* Misclassified Images **************\n")
     model.eval()
@@ -203,3 +203,27 @@ def display_misclassified_images(model,device,classes):
                 ax.set_title(f"Target = {classes[target[idx].item()]} \n Predicted = {classes[pred[idx].item()]}")
 
             plt.show()
+
+'''
+def display_misclassified_images(model, test_loader, num_images=10):
+    model.eval()
+    incorrect_examples = []
+
+    for data, target in test_loader:
+        if torch.cuda.is_available():
+            data, target = data.cuda(), target.cuda()
+        output = model(data)
+        _, pred = torch.max(output, 1)
+        idxs_mask = (pred != target).nonzero()
+        incorrect_examples.append(data[idxs_mask].cpu().numpy())
+
+    fig = plt.figure(figsize=(20, 8))
+    for idx in np.arange(num_images):
+        ax = fig.add_subplot(2, 10/2, idx+1, xticks=[], yticks=[])
+        img = incorrect_examples[idx][0]
+        img = img/2 + 0.5
+        img = np.clip(img, 0, 1)
+        imshow(img)
+        ax.set_title(f"{classes[pred[idx]]}: x%\n (label: {classes[target[idx]]})")
+
+    plt.show()
