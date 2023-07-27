@@ -188,6 +188,7 @@ def display_misclassified_images(model,device,classes,num_images=10):
             output = model(data)
             pred = output.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
             # Get the indexes of images that are incorrectly classified
+            idxs_mask = (pred != target).nonzero()
             incorrect_examples.append(data[idxs_mask].cpu().numpy())
             #plt.ion()
     
