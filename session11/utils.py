@@ -157,8 +157,8 @@ def denormalize(images, means, stds):
     stds = torch.tensor(stds).reshape(1, 3, 1, 1)
     return images * stds + means
     
-'''
-def display_misclassified_images(model,device,classes):
+
+def display_misclassified_images(model,device,classes,num_images=10):
     print("\n********* Misclassified Images **************\n")
     model.eval()
 
@@ -180,36 +180,9 @@ def display_misclassified_images(model,device,classes):
                                            download=True,transform = transform_testv2())
     testloader =torch.utils.data.DataLoader(testset, batch_size=len(testset),
                                              shuffle=True, num_workers=2)
-    with torch.no_grad():
-        for data, target in testloader:
-            data, target = data.to(device), target.to(device)
-            output = model(data)
-            pred = output.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
-            # Get the indexes of images that are incorrectly classified
-            indexes = (pred.view(-1,) != target.view(-1,)).nonzero()
-            plt.ion()
-            fig = plt.figure(figsize=(15, 20))
-            for i, idx in enumerate(indexes[:10]):
-                ax = fig.add_subplot(2, 5, i+1)
-                denorm_images = denormalize(data.cpu(), [0.4914, 0.4822, 0.4465], [0.2470, 0.2435, 0.2616])
-                #ax.imshow(denorm_images[idx].squeeze().permute(1, 2, 0).clamp(0,1))
-                
-                #def imshow(tensor):
-                tensor = denorm_images[idx].cuda()
-                if tensor.device != plt.gca().device:
-                    tensor = tensor.cpu()
-                    plt.imshow(tensor.squeeze().permute(1, 2, 0).clamp(0, 1))
-                    
-                ax.set_title(f"Target = {classes[target[idx].item()]} \n Predicted = {classes[pred[idx].item()]}")
-
-            plt.show()
-
-'''
-def display_misclassified_images(model, test_loader, num_images=10):
-    model.eval()
     incorrect_examples = []
 
-    for data, target in test_loader:
+    for data, target in testloader:
         if torch.cuda.is_available():
             data, target = data.cuda(), target.cuda()
         output = model(data)
@@ -227,3 +200,4 @@ def display_misclassified_images(model, test_loader, num_images=10):
         ax.set_title(f"{classes[pred[idx]]}: x%\n (label: {classes[target[idx]]})")
 
     plt.show()
+
