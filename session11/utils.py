@@ -182,8 +182,7 @@ def display_misclassified_images(model,device,classes,num_images=10):
                                              shuffle=True, num_workers=2)
     incorrect_examples = []
 
-
-     with torch.no_grad():
+    with torch.no_grad():
         for data, target in testloader:
             data, target = data.to(device), target.to(device)
             output = model(data)
