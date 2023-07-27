@@ -171,7 +171,7 @@ for epoch in range(EPOCHS):
     # scheduler.step()
     test(net, device, test_loader)
 
-display_misclassified_images(net,"cpu",list(classes))
+display_misclassified_images(net,device,list(classes))
 '''
 from pytorch_grad_cam import GradCAM
 from pytorch_grad_cam.utils.model_targets import ClassifierOutputTarget
