@@ -182,15 +182,17 @@ def display_misclassified_images(model,device,classes,num_images=10):
                                              shuffle=True, num_workers=2)
     incorrect_examples = []
 
-    for data, target in testloader:
-        if torch.cuda.is_available():
-            data, target = data.cuda(), target.cuda()
-        output = model(data)
-        _, pred = torch.max(output, 1)
-        idxs_mask = (pred != target).nonzero()
-        incorrect_examples.append(data[idxs_mask].cpu().numpy())
 
-    fig = plt.figure(figsize=(20, 8))
+     with torch.no_grad():
+        for data, target in testloader:
+            data, target = data.to(device), target.to(device)
+            output = model(data)
+            pred = output.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
+            # Get the indexes of images that are incorrectly classified
+            incorrect_examples.append(data[idxs_mask].cpu().numpy())
+            #plt.ion()
+    
+    fig = plt.figure(figsize=(15, 20))
     for idx in np.arange(num_images):
         ax = fig.add_subplot(2, 10/2, idx+1, xticks=[], yticks=[])
         img = incorrect_examples[idx][0]
