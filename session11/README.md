@@ -3,12 +3,12 @@
 
 ## Library used
 
-[https://github.com/senthilva/ERA1.git](https://github.com/senthilva/ERA1/tree/main/session11)
+(https://github.com/senthilva/ERA1/tree/main/session11)
 
 
 ## Resnet model used
 
-[https://github.com/senthilva/deeplearning_template/blob/main/models/custom_resnet.py](https://github.com/senthilva/ERA1/blob/main/session11/models/resnet.py)
+(https://github.com/senthilva/ERA1/blob/main/session11/models/resnet.py)
 
 
 
@@ -17,7 +17,8 @@
 
 
     ```
-   def transform_trainv2():
+    
+    def transform_trainv2():
     means = [0.4914, 0.4822, 0.4465]
     stds = [0.2470, 0.2435, 0.2616]
     return A.Compose(
@@ -30,8 +31,8 @@
         A.CoarseDropout(max_holes=1, max_height=8, max_width=8, min_holes=1, min_height=8, min_width=8, fill_value=means),
         ToTensorV2(),
     ])
-      
-def transform_testv2():
+
+    def transform_testv2():
     means = [0.4914, 0.4822, 0.4465]
     stds = [0.2470, 0.2435, 0.2616]
     return A.Compose(
@@ -39,6 +40,8 @@ def transform_testv2():
         A.Normalize(mean=means, std=stds, always_apply=True),
         ToTensorV2(),
     ])
+      
+
     ```
 
 
